@@ -1,0 +1,19 @@
+{
+    "name": "zsirius/utils",
+    "description": "php常用工具类",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Zsirius\\Utils\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Sirius",
+            "email": "707759383@qq.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}
