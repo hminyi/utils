@@ -8,12 +8,12 @@
             "Zsirius\\Utils\\": "src/"
         }
     },
-    "authors": [
-        {
-            "name": "Sirius",
-            "email": "707759383@qq.com"
-        }
-    ],
+    "authors": [{
+        "name": "Sirius",
+        "email": "707759383@qq.com"
+    }],
     "minimum-stability": "dev",
-    "require": {}
+    "require": {
+        "php": ">=5.6.0"
+    }
 }
