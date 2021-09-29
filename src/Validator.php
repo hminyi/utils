@@ -188,8 +188,8 @@ class Validator
 
     /**
      * 检查是否为合法金额
-     * @param  string  $str    金额字符串
-     * @param  integer $length 整数部分的最大位数
+     * @param  string $str    金额字符串
+     * @param  int    $length 整数部分的最大位数
      * @return bool
      */
     public static function checkMoney($str, $length = 8)

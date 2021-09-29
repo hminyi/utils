@@ -185,7 +185,7 @@ class Sensitive
 
     /**
      * 被检测内容是否合法
-     * @param  $content
+     * @param  string $content 内容
      * @return bool
      */
     public function islegal($content)
@@ -222,7 +222,8 @@ class Sensitive
     }
 
     /**
-     * @param $filepath
+     * 迭代读取文件
+     * @param string $filepath 文件路径
      */
     protected function yieldToReadFile($filepath)
     {
@@ -233,9 +234,9 @@ class Sensitive
         fclose($fp);
     }
 
-    // 将单个敏感词构建成树结构
     /**
-     * @param  $word
+     * 将单个敏感词构建成树结构
+     * @param  string $word 关键词
      * @return null
      */
     protected function buildWordToTree($word = '')
@@ -272,8 +273,8 @@ class Sensitive
 
     /**
      * 敏感词替换为对应长度的字符
-     * @param  $word
-     * @param  $char
+     * @param  string   $word 关键词
+     * @param  string   $char 替换词
      * @return string
      */
     protected function dfaBadWordConversChars($word, $char)

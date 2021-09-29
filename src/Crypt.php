@@ -11,9 +11,9 @@ class Crypt
      * @param  int      $expiry 过期时间，单位：秒
      * @return string
      */
-    public static function encrypt($string, $key = '', $expiry = 0)
+    public static function encode($string, $key = '', $expiry = 0)
     {
-        return self::cryptStr($string, 'ENCODE', $key, $expiry);
+        return self::operate($string, 'ENCODE', $key, $expiry);
     }
 
     /**
@@ -22,21 +22,20 @@ class Crypt
      * @param  string   $key    密钥
      * @return string
      */
-    public static function decrypt($string, $key)
+    public static function decode($string, $key = '')
     {
-        return self::cryptStr($string, 'DECODE', $key);
+        return self::operate($string, 'DECODE', $key);
     }
 
     /**
      * 加密解密方法
-     * @access static
      * @param  string   $string    明文或密文
      * @param  string   $operation DECODE表示解密,其它表示加密
-     * @param  string   $key
+     * @param  string   $key       密钥
      * @param  int      $expiry    密文有效期
      * @return string
      */
-    public static function cryptStr($string, $operation = 'DECODE', $key = '', $expiry = 0)
+    public static function operate($string, $operation = 'DECODE', $key = '', $expiry = 0)
     {
         // 动态密匙长度，相同的明文会生成不同密文就是依靠动态密匙
         $ckey_length = 8;

@@ -102,10 +102,10 @@ class Http
 
     /**
      * 异步发送一个请求
-     * @param  string  $url    请求的链接
-     * @param  mixed   $params 请求的参数
-     * @param  string  $method 请求的方法
-     * @return boolean TRUE
+     * @param  string $url    请求的链接
+     * @param  mixed  $params 请求的参数
+     * @param  string $method 请求的方法
+     * @return bool
      */
     public static function sendAsyncRequest($url, $params = [], $method = 'POST')
     {
@@ -155,9 +155,9 @@ class Http
 
     /**
      * 发送文件到客户端
-     * @param string $file
-     * @param bool   $delaftersend
-     * @param bool   $exitaftersend
+     * @param string $file          文件
+     * @param bool   $delaftersend  发送完删除
+     * @param bool   $exitaftersend 发送完退出
      */
     public static function sendToBrowser($file, $delaftersend = true, $exitaftersend = true)
     {

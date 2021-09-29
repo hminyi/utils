@@ -9,9 +9,9 @@ class Str
 {
     /**
      * 格式化字节大小
-     * @param  number $size                               字节数
-     * @param  string $delimiter                          数字和单位分隔符
-     * @return string 格式化后的带单位的大小
+     * @param  number   $size      字节数
+     * @param  string   $delimiter 数字和单位分隔符
+     * @return string
      */
     public function formatBytes($size, $delimiter = '')
     {
@@ -40,8 +40,8 @@ class Str
 
     /**
      * 下划线转驼峰
-     * @param  string   $uncamelized_words
-     * @param  string   $separator
+     * @param  string   $uncamelized_words 字符串
+     * @param  string   $separator         转换标识
      * @return string
      */
     public static function camelize($uncamelized_words, $separator = '_')
@@ -52,8 +52,8 @@ class Str
 
     /**
      * 驼峰转下划线
-     * @param  string   $camelCaps
-     * @param  string   $separator
+     * @param  string   $camelCaps 字符串
+     * @param  string   $separator 转换标识
      * @return string
      */
     public static function uncamelize($camelCaps, $separator = '_')
@@ -63,9 +63,9 @@ class Str
 
     /**
      * 删除字符串两端的字符串
-     * 
-     * @param $str
-     * @param $remove
+     * @param  string   $str    字符串
+     * @param  string   $remove 删除字符串
+     * @return string
      */
     public static function trim($str, $remove)
     {
@@ -73,9 +73,10 @@ class Str
     }
 
     /**
-     * @param  $str
-     * @param  $remove
-     * @return mixed
+     * 删除字符串左边的字符串
+     * @param  string   $str    字符串
+     * @param  string   $remove 删除字符串
+     * @return string
      */
     public static function ltrim($str, $remove)
     {
@@ -89,9 +90,10 @@ class Str
     }
 
     /**
-     * @param  $str
-     * @param  $remove
-     * @return mixed
+     * 删除字符串右边的字符串
+     * @param  string   $str    字符串
+     * @param  string   $remove 删除字符串
+     * @return string
      */
     public static function rtrim($str, $remove)
     {
@@ -111,7 +113,7 @@ class Str
      */
     public static function sn()
     {
-        $orderstr = date('YmdH') . substr(implode('', array_map('ord', str_split(substr(uniqid(), 7, 13), 1))), 0, 8);
-        return substr($orderstr, 2);
+        $str = date('YmdH') . substr(implode('', array_map('ord', str_split(substr(uniqid(), 7, 13), 1))), 0, 8);
+        return substr($str, 2);
     }
 }

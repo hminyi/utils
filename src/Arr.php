@@ -9,11 +9,11 @@ class Arr
 {
     /**
      * 获取数组中指定的列
-     * @param  $source
-     * @param  $column
+     * @param  array   $source 数组
+     * @param  string  $column 键名
      * @return array
      */
-    public static function getColumn($source, $column)
+    public static function column($source, $column)
     {
         $columnArr = [];
         foreach ($source as $item) {
@@ -24,11 +24,11 @@ class Arr
 
     /**
      * 获取数组中指定的列 [支持多列]
-     * @param  $source
-     * @param  $columns
+     * @param  array   $source  数组
+     * @param  array   $columns 列数组
      * @return array
      */
-    public static function getColumns($source, $columns)
+    public static function columns($source, $columns)
     {
         $columnArr = [];
         foreach ($source as $item) {
@@ -43,8 +43,8 @@ class Arr
 
     /**
      * 把二维数组中某列设置为key返回
-     * @param  $source
-     * @param  $index
+     * @param  array   $source 数组
+     * @param  string  $index  键值
      * @return array
      */
     public static function column2key($source, $index)
@@ -58,8 +58,8 @@ class Arr
 
     /**
      * 多维数组合并
-     * @param  $array1
-     * @param  $array2
+     * @param  array   $array1 数组1
+     * @param  array   $array2 数组2
      * @return array
      */
     public static function multiMerge($array1, $array2)
@@ -67,12 +67,7 @@ class Arr
         $merge = $array1 + $array2;
         $data = [];
         foreach ($merge as $key => $val) {
-            if (
-                isset($array1[$key])
-                && is_array($array1[$key])
-                && isset($array2[$key])
-                && is_array($array2[$key])
-            ) {
+            if (isset($array1[$key]) && is_array($array1[$key]) && isset($array2[$key]) && is_array($array2[$key])) {
                 $data[$key] = self::multiMerge($array1[$key], $array2[$key]);
             } else {
                 $data[$key] = isset($array2[$key]) ? $array2[$key] : $array1[$key];
@@ -100,23 +95,23 @@ class Arr
 
     /**
      * 多维数组转化为一维数组
-     * @param  $array 多维数组
-     * @return array  一维数组
+     * @param  array   $array 多维数组
+     * @return array
      */
     public static function multi2single($array)
     {
         /**
          * @var array
          */
-        static $result_array = [];
-        foreach ($array as $value) {
-            if (is_array($value)) {
-                self::multi2single($value);
+        static $resultArr = [];
+        foreach ($array as $v) {
+            if (is_array($v)) {
+                self::multi2single($v);
             } else {
-                $result_array[] = $value;
+                $resultArr[] = $v;
             }
         }
-        return $result_array;
+        return $resultArr;
     }
 
     /**
@@ -124,49 +119,48 @@ class Arr
      * @param  obj|array $obj 要转换的数据
      * @return array
      */
-    public static function obj2arr($obj)
+    public static function obj2arr(&$object)
     {
-        if (is_array($obj)) {
-            foreach ($obj as &$value) {
-                $value = self::obj2arr($value);
-            }
-            return $obj;
-        } elseif (is_object($obj)) {
-            $obj = get_object_vars($obj);
-            return self::obj2arr($obj);
+        if (is_object($object)) {
+            $arr = (array) ($object);
         } else {
-            return $obj;
+            $arr = &$object;
         }
+        if (is_array($arr)) {
+            foreach ($arr as $varName => $varValue) {
+                $arr[$varName] = self::obj2arr($varValue);
+            }
+        }
+        return $arr;
     }
 
     /**
      * 二维数组排序
-     * @param  array   $arr  数组
-     * @param  string  $keys 根据键值
-     * @param  string  $type 升序降序
+     * @param  array   $array 数组
+     * @param  string  $keys  根据键值
+     * @param  string  $type  升序降序
      * @return array
      */
-    public static function multi2sort($arr, $keys, $type = 'desc')
+    public static function multi2sort($array, $keys, $type = 'desc')
     {
-        $key_value = $new_array = [];
-        foreach ($arr as $k => $v) {
-            $key_value[$k] = $v[$keys];
+        $keyValue = $newArray = [];
+        foreach ($array as $k => $v) {
+            $keyValue[$k] = $v[$keys];
         }
         if ($type == 'asc') {
-            asort($key_value);
+            asort($keyValue);
         } else {
-            arsort($key_value);
+            arsort($keyValue);
         }
-        reset($key_value);
-        foreach ($key_value as $k => $v) {
-            $new_array[$k] = $arr[$k];
+        reset($keyValue);
+        foreach ($keyValue as $k => $v) {
+            $newArray[$k] = $array[$k];
         }
-        return $new_array;
+        return $newArray;
     }
 
     /**
-     * 字符串转换为数组，主要用于把分隔符调整到第二个参数
-     *
+     * 字符串转换为数组
      * @param  string  $str  要分割的字符串
      * @param  string  $glue 分割符
      * @return array
@@ -181,18 +175,17 @@ class Arr
     }
 
     /**
-     * 数组转换为字符串，主要用于把分隔符调整到第二个参数
-     *
-     * @param  array    $arr  要连接的数组
-     * @param  string   $glue 分割符
+     * 数组转换为字符串
+     * @param  array    $array 要连接的数组
+     * @param  string   $glue  分割符
      * @return string
      */
-    public static function arr2str($arr = [], $glue = ',')
+    public static function arr2str($array = [], $glue = ',')
     {
-        if (empty($arr)) {
+        if (empty($array)) {
             return '';
         } else {
-            return implode($glue, $arr);
+            return implode($glue, $array);
         }
     }
 
@@ -226,8 +219,8 @@ class Arr
         $xml = simplexml_load_string($str, 'SimpleXMLElement', LIBXML_NOCDATA);
         $json = json_encode($xml);
         $result = [];
-        $bad_result = json_decode($json, true); // value，一个字段多次出现，结果中的value是数组
-        foreach ($bad_result as $k => $v) {
+        $badResult = json_decode($json, true); // value，一个字段多次出现，结果中的value是数组
+        foreach ($badResult as $k => $v) {
             if (is_array($v)) {
                 if (count($v) == 0) {
                     $result[$k] = '';
@@ -244,42 +237,38 @@ class Arr
     }
 
     /**
-     * @desc 多个数组的笛卡尔积
-     * @param  $data
+     * 两个数组的笛卡尔积
+     * @param  array   $array1 数组1
+     * @param  array   $array2 数组2
      * @return array
      */
-    public static function multiCombine()
+    private function combine($array1, $array2)
     {
-        $data = func_get_args();
-        $data = current($data);
-        $cnt = count($data);
         $result = [];
-        $arr1 = array_shift($data);
-        foreach ($arr1 as $item) {
-            $result[] = [$item];
-        }
-
-        foreach ($data as $item) {
-            $result = self::combine($result, $item);
+        foreach ($array1 as $item1) {
+            foreach ($array2 as $item2) {
+                $temp = $item1;
+                $temp[] = $item2;
+                $result[] = $temp;
+            }
         }
         return $result;
     }
 
     /**
-     * 两个数组的笛卡尔积
-     * @param  $arr1
-     * @param  $arr2
+     * 多个数组的笛卡尔积
      * @return array
      */
-    public static function combine($arr1, $arr2)
+    public static function multiCombine()
     {
+        $data = func_get_args();
+        $cnt = count($data);
         $result = [];
-        foreach ($arr1 as $item1) {
-            foreach ($arr2 as $item2) {
-                $temp = $item1;
-                $temp[] = $item2;
-                $result[] = $temp;
-            }
+        foreach ($data[0] as $item) {
+            $result[] = [$item];
+        }
+        for ($i = 1; $i < $cnt; $i++) {
+            $result = self::combine($result, $data[$i]);
         }
         return $result;
     }

@@ -85,7 +85,7 @@ class Log
     }
 
     /**
-     * @param string|array $msg
+     * @param string|array $msg 信息
      */
     public static function error($msg)
     {
@@ -93,7 +93,7 @@ class Log
     }
 
     /**
-     * @param string|array $msg
+     * @param string|array $msg 信息
      */
     public static function warning($msg)
     {
@@ -101,7 +101,7 @@ class Log
     }
 
     /**
-     * @param string|array $msg
+     * @param string|array $msg 信息
      */
     public static function notice($msg)
     {
@@ -109,7 +109,7 @@ class Log
     }
 
     /**
-     * @param string|array $msg
+     * @param string|array $msg 信息
      */
     public static function info($msg)
     {
@@ -117,7 +117,7 @@ class Log
     }
 
     /**
-     * @param string|array $msg
+     * @param string|array $msg 信息
      */
     public static function debug($msg)
     {
@@ -125,9 +125,8 @@ class Log
     }
 
     /**
-     * 追加nontice日志
-     * @param $format
-     * @param $arr_data
+     * 追加日志
+     * @param string|array $msg 信息
      */
     public static function pushNotice($msg)
     {
@@ -145,8 +144,8 @@ class Log
 
     /**
      * 写入日志
-     * @param int          $level
-     * @param string|array $msg
+     * @param int          $level 等级
+     * @param string|array $msg   信息
      */
     private static function writeLog($level, $msg)
     {
@@ -189,7 +188,10 @@ class Log
     }
 
     /**
+     * 获取等级路径
      *
+     * @param  string   $level 等级
+     * @return string
      */
     private static function getLogFilePath($level)
     {

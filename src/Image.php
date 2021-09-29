@@ -8,11 +8,11 @@ namespace Zsirius\Utils;
 class Image
 {
     /**
-     * @desc Base64生成图片文件,自动解析格式
-     * @param  $base64   可以转成图片的base64字符串
-     * @param  $path     绝对路径
-     * @param  $filename 生成的文件名
-     * @return array     返回的数据，当返回status==1时，代表base64生成图片成功，其他则表示失败
+     * Base64生成图片文件,自动解析格式
+     * @param  string  $base64   可以转成图片的base64字符串
+     * @param  string  $path     绝对路径
+     * @param  string  $filename 生成的文件名
+     * @return array
      */
     public static function base64ToImage($base64, $path, $filename)
     {
@@ -59,12 +59,12 @@ class Image
     }
 
     /**
-     * @desc 根据图片数组, 拼接成微信九宫格式拼图 https://blog.csdn.net/guo_qiangqiang/article/details/100043508     http://www.voidcn.com/article/p-ehjdfrmi-td.html
-     * @param  array   $pic_list                                      [带拼成的图片数组]
-     * @param  integer $bg_w                                          [背景图片宽度]
-     * @param  integer $bg_h                                          [背景图片高度]
-     * @param  string  $format                                        [阿里云图片获取参数]
-     * @return [type]  [返回一个拼接好的图片（路径）]
+     * @desc 根据图片数组, 拼接成微信九宫格式拼图
+     * @param  array    $pic_list 带拼成的图片数组
+     * @param  int      $bg_w     背景图片宽度
+     * @param  int      $bg_h     背景图片高度
+     * @param  string   $format   阿里云图片获取参数
+     * @return string
      */
     public static function mosaicGroupAvatar($pic_list = [], $bg_w = 500, $bg_h = 500, $format = '@0e_320w_320h_0c_0i_1o_90Q_1x.jpg')
     {

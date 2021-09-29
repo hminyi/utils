@@ -18,7 +18,6 @@ class GeoTrans
 
     /**
      * 获取两个坐标之间的距离
-     *
      * @param  float       $lng1     经度1
      * @param  float       $lat1     维度1
      * @param  float       $lng2     经度2

@@ -9,9 +9,9 @@ class File
 {
     /**
      * 生成目录
-     * @param  string    $path 目录
-     * @param  integer   $mode 权限
-     * @return boolean
+     * @param  string $path 目录
+     * @param  int    $mode 权限
+     * @return bool
      */
     public static function mkDir($path, $mode = 0755)
     {
@@ -38,8 +38,8 @@ class File
 
     /**
      * 读取文件内容
-     * @param  $filename 文件名
-     * @return string    文件内容
+     * @param  string   $filename 文件名
+     * @return string
      */
     public static function readFile($filename)
     {
@@ -57,10 +57,10 @@ class File
 
     /**
      * 写文件
-     * @param  $filename  文件名
-     * @param  $writetext 文件内容
-     * @param  $openmod   打开方式
-     * @return boolean    true 成功, false 失败
+     * @param  string $filename  文件名
+     * @param  string $writetext 文件内容
+     * @param  string $openmod   打开方式
+     * @return bool
      */
     public static function writeFile($filename, $writetext, $openmod = 'w')
     {
@@ -76,8 +76,8 @@ class File
 
     /**
      * 删除目录
-     * @param  $dirName 原目录
-     * @return boolean  true 成功, false 失败
+     * @param  string $dirName 原目录
+     * @return bool
      */
     public static function delDir($dirName)
     {
@@ -102,9 +102,9 @@ class File
 
     /**
      * 复制目录
-     * @param  $surDir 原目录
-     * @param  $toDir  目标目录
-     * @return boolean true 成功, false 失败
+     * @param  string $surDir 原目录
+     * @param  string $toDir  目标目录
+     * @return bool
      */
     public static function copyDir($surDir, $toDir)
     {
@@ -135,8 +135,8 @@ class File
 
     /**
      * 列出目录
-     * @param  string $dir                                                   目录名
-     * @return array  目录数组。列出文件夹下内容，返回数组 $dirArray['dir']:存文件夹；$dirArray['file']：存文件
+     * @param  string  $dir 目录名
+     * @return array
      */
     public static function getDirs($dir)
     {
@@ -162,8 +162,9 @@ class File
 
     /**
      * 取得目录下面的文件信息
-     * @access public
-     * @param mixed $pathname 路径
+     * @param  string  $pathname 路径
+     * @param  string  $pattern  匹配
+     * @return array
      */
     public static function listFile($pathname, $pattern = '*')
     {
@@ -225,8 +226,8 @@ class File
 
     /**
      * 统计文件夹大小
-     * @param  $dir   目录名
-     * @return number 文件夹大小(单位 B)
+     * @param  string $dir 目录名
+     * @return int
      */
     public static function getSize($dir)
     {
@@ -274,7 +275,8 @@ class File
 
     /**
      * 判断目录是否为空
-     * @return void
+     * @param  string $directory 目录路径
+     * @return bool
      */
     public function isEmpty($directory)
     {
@@ -318,25 +320,25 @@ class File
 
     /**
      * @desc 文件重命名
-     * @param $old_name
-     * @param $new_name
+     * @param  string $old_name 源文件名
+     * @param  string $new_name 新文件名
      * @return bool
      */
-    public static function rename($old_name,$new_name)
+    public static function rename($old_name, $new_name)
     {
-        if(($new_name!=$old_name) && is_writable($old_name))
-        {
-            return rename($old_name,$new_name);
+        if (($new_name != $old_name) && is_writable($old_name)) {
+            return rename($old_name, $new_name);
         }
         return false;
     }
-    
-        /**
-     * @desc 获取文件扩展名
-     * @param string $filename
-     */
-    public static function getExtension($filename){
 
+    /**
+     * @desc 获取文件扩展名
+     * @param  string   $filename 文件路径
+     * @return string
+     */
+    public static function getExtension($filename)
+    {
         $path_info = pathinfo($filename);
         return strtolower($path_info['extension']);
     }

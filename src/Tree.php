@@ -93,7 +93,7 @@ class Tree
 
     /**
      * 得到子级数组
-     * @param  int
+     * @param  int     $myid 节点ID
      * @return array
      */
     public function getChild($myid)
@@ -113,7 +113,7 @@ class Tree
     /**
      * 读取指定节点的所有孩子节点
      * @param  int     $myid     节点ID
-     * @param  boolean $withself 是否包含自身
+     * @param  bool    $withself 是否包含自身
      * @return array
      */
     public function getChildren($myid, $withself = false)
@@ -136,7 +136,7 @@ class Tree
     /**
      * 读取指定节点的所有孩子节点ID
      * @param  int     $myid     节点ID
-     * @param  boolean $withself 是否包含自身
+     * @param  bool    $withself 是否包含自身
      * @return array
      */
     public function getChildrenIds($myid, $withself = false)
@@ -151,7 +151,7 @@ class Tree
 
     /**
      * 得到当前位置父辈数组
-     * @param  int
+     * @param  int     $myid 节点ID
      * @return array
      */
     public function getParent($myid)
@@ -180,7 +180,7 @@ class Tree
 
     /**
      * 得到当前位置所有父辈数组
-     * @param  int
+     * @param  int     $myid     节点ID
      * @param  bool    $withself 是否包含自己
      * @return array
      */
@@ -209,8 +209,8 @@ class Tree
 
     /**
      * 读取指定节点所有父类节点ID
-     * @param  int     $myid
-     * @param  boolean $withself
+     * @param  int     $myid     节点ID
+     * @param  bool    $withself 是否包含自己
      * @return array
      */
     public function getParentsIds($myid, $withself = false)
@@ -301,7 +301,7 @@ class Tree
 
     /**
      * 菜单数据
-     * @param  int      $myid
+     * @param  int      $myid           节点ID
      * @param  string   $itemtpl
      * @param  mixed    $selectedids
      * @param  mixed    $disabledids
@@ -347,7 +347,7 @@ class Tree
 
     /**
      * 特殊
-     * @param  integer  $myid        要查询的ID
+     * @param  int      $myid        要查询的ID
      * @param  string   $itemtpl1    第一种HTML代码方式
      * @param  string   $itemtpl2    第二种HTML代码方式
      * @param  mixed    $selectedids 默认选中
@@ -425,8 +425,8 @@ class Tree
 
     /**
      * 将getTreeArray的结果返回为二维数组
-     * @param  array   $data
-     * @param  string  $field
+     * @param  array   $data  数组
+     * @param  string  $field 字符串
      * @return array
      */
     public function getTreeList($data = [], $field = 'name')

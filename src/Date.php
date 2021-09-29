@@ -5,12 +5,10 @@ namespace Zsirius\Utils;
 class Date
 {
     /**
-     * 格式化 UNIX 时间戳为人易读的字符串
-     *
-     *
-     * @param  int    Unix                          时间戳
-     * @param  mixed  $local                        本地时间
-     * @return string 格式化的日期字符串
+     * 格式化 UNIX 时间戳
+     * @param  int      $remote 时间戳
+     * @param  mixed    $local  本地时间
+     * @return string
      */
     public static function human($remote, $local = null)
     {
@@ -40,119 +38,368 @@ class Date
     }
 
     /**
-     * 比较2个日期相差多少天
-     * @param  $date1
-     * @param  $date2
-     * @return float
+     * 今日日期
+     *
+     * @return string
      */
-    public static function computeDateDifferent($date1, $date2)
+    public static function today()
     {
-        $timestamp1 = strtotime($date1);
-        $timestamp2 = strtotime($date2);
-
-        $diffTime = abs($timestamp2 - $timestamp1);
-        $days = $diffTime / (24 * 3600);
-        return $days;
+        return date('Y-m-d');
     }
 
     /**
-     * 比较2个小时相差多少时
-     * @param  $hour1
-     * @param  $hour2
-     * @return mixed
+     * 昨日日期
+     *
+     * @return string
      */
-    public static function computeHoursDifference($hour1, $hour2)
+    public static function yesterday()
     {
-        $diffTime = $hour2 - $hour1;
-        return $diffTime;
+        return date('Y-m-d', strtotime('-1 day'));
     }
 
     /**
-     * 获取日期的周数
-     * @param  $date
-     * @return bool
+     * 本周开始和结束日期
+     *
+     * @return array
      */
-    public static function getWeekOfDate($date)
+    public static function thisWeek()
+    {
+        $N = date('N');
+        $d = 7 - $N;
+        $sta = date('Y-m-d', strtotime("-{$N} day"));
+        $end = date('Y-m-d', strtotime("+{$d} day"));
+
+        return [$sta, $end];
+    }
+
+    /**
+     * 本周所有日期
+     *
+     * @return array
+     */
+    public static function thisWeeks()
+    {
+        $N = date('N') - 1;
+        $mon = strtotime("-{$N} day");
+        $weeks = [];
+
+        for ($i = 0; $i < 7; $i++) {
+            $date = '';
+            $date = date('Y-m-d', strtotime("+{$i} day", $mon));
+
+            $weeks[] = $date;
+        }
+
+        return $weeks;
+    }
+
+    /**
+     * 上周开始和结束日期
+     *
+     * @return array
+     */
+    public static function lastWeek()
+    {
+        $week = date('Y-m-d', strtotime('-1 week'));
+        $time = strtotime($week);
+        $N = date('N', $time);
+        $d = 7 - $N;
+        $N = $N - 1;
+        $sta = date('Y-m-d', strtotime("-{$N} day", $time));
+        $end = date('Y-m-d', strtotime("+{$d} day", $time));
+
+        return [$sta, $end];
+    }
+
+    /**
+     * 上周所有日期
+     *
+     * @return array
+     */
+    public static function lastWeeks()
+    {
+        $week = date('Y-m-d', strtotime('-1 week'));
+        $time = strtotime($week);
+        $N = date('N', $time);
+        $N = $N - 1;
+        $mon = strtotime("-{$N} day", $time);
+
+        $weeks = [];
+        for ($i = 0; $i < 7; $i++) {
+            $date = '';
+            $date = date('Y-m-d', strtotime("+{$i} day", $mon));
+
+            $weeks[] = $date;
+        }
+
+        return $weeks;
+    }
+
+    /**
+     * 月份所有日期
+     * @param  string  $month 月份
+     * @return array
+     */
+    public static function monthDate($month = 'thismonth')
+    {
+        if ($month == 'thismonth') {
+            $month = date('Y-m');
+        }
+
+        if ($month == 'lastmonth') {
+            $month = date('Y-m', strtotime('-1 month'));
+        }
+
+        $t = date('t', strtotime($month));
+        $time = strtotime($month);
+
+        $dates = [];
+        for ($i = 0; $i < $t; $i++) {
+            $date = '';
+            $date = date('Y-m-d', strtotime("+{$i} day", $time));
+
+            $dates[] = $date;
+        }
+
+        return $dates;
+    }
+
+    /**
+     * 本月开始和结束日期
+     *
+     * @return array
+     */
+    public static function thisMonth()
+    {
+        $ym = date('Y-m');
+        $t = date('t');
+        $sta = $ym . '-01';
+        $end = $ym . '-' . $t;
+
+        return [$sta, $end];
+    }
+
+    /**
+     * 上月开始和结束日期
+     *
+     * @return array
+     */
+    public static function lastMonth()
+    {
+        $m = strtotime('-1 month');
+        $t = date('t', $m);
+        $sta = date('Y-m', $m) . '-01';
+        $end = date('Y-m', $m) . '-' . $t;
+
+        return [$sta, $end];
+    }
+
+    /**
+     * 下月开始和结束日期
+     *
+     * @return array
+     */
+    public static function nextMonth()
+    {
+        $m = strtotime('+1 month');
+        $t = date('t', $m);
+        $sta = date('Y-m', $m) . '-01';
+        $end = date('Y-m', $m) . '-' . $t;
+
+        return [$sta, $end];
+    }
+
+    /**
+     * 最近天数所有日期
+     * @param  int     $days 天数
+     * @return array
+     */
+    public static function daysDate($days = 1)
+    {
+        $sta = strtotime("-{$days} day");
+        $dates = [];
+
+        for ($i = 0; $i < $days; $i++) {
+            $date = '';
+            $date = date('Y-m-d', strtotime("+{$i} day", $sta));
+
+            $dates[] = $date;
+        }
+
+        return $dates;
+    }
+
+    /**
+     * 几年前开始和结束的日期
+     * @param  int     $year 几年
+     * @return array
+     */
+    public static function year($year = 0)
+    {
+        $year = date('Y') - $year;
+        $sta = $year . '-01-01';
+        $end = $year . '-12-31';
+
+        return [$sta, $end];
+    }
+
+    /**
+     * 几天前到现在/昨日结束的日期
+     * @param  int     $day 天数
+     * @param  bool    $now 现在或者昨天结束日期
+     * @return array
+     */
+    public static function dayToNow($day = 1, $now = false)
+    {
+        $end = date('Y-m-d');
+
+        if (!$now) {
+            $end = date('Y-m-d', strtotime('-1 day'));
+        }
+
+        $sta = date('Y-m-d', strtotime("-{$day} day"));
+
+        return [$sta, $end];
+    }
+
+    /**
+     * 两个日期间的所有日期
+     * @param  string  $sta 开始日期
+     * @param  string  $end 结束日期
+     * @return array
+     */
+    public static function betweenDates($sta = '', $end = '')
+    {
+        $dt_sta = strtotime($sta);
+        $dt_end = strtotime($end);
+        $dates = [];
+
+        while ($dt_sta <= $dt_end) {
+            $dates[] = date('Y-m-d', $dt_sta);
+            $dt_sta = strtotime('+1 day', $dt_sta);
+        }
+
+        return $dates;
+    }
+
+    /**
+     * 几天前的日期
+     * @param  int   $days 天数
+     * @return int
+     */
+    public static function daysAgo($days = 1)
+    {
+        $date = date('Y-m-d', strtotime("-{$days} day"));
+
+        return $date;
+    }
+
+    /**
+     * 几天后的日期
+     * @param  int   $days 天数
+     * @return int
+     */
+    public static function daysAfter($days = 1)
+    {
+        $date = date('Y-m-d', strtotime("+{$days} day"));
+
+        return $date;
+    }
+
+    /**
+     * 天数转换成秒数
+     * @param  int   $days 天数
+     * @return int
+     */
+    public static function daysToSecond($days = 1)
+    {
+        return $days * 86400;
+    }
+
+    /**
+     * 周数转换成秒数
+     * @param  int   $week 周数
+     * @return int
+     */
+    public static function weekToSecond($weeks = 1)
+    {
+        return self::daysToSecond() * 7 * $weeks;
+    }
+
+    /**
+     * 日期的开始时间和结束时间
+     * @param  string  $date 日期
+     * @return array
+     */
+    public static function datetime($date = '')
     {
         if (empty($date)) {
-            return false;
+            $date = date('Y-m-d');
         }
-        $weeks = ['日', '一', '二', '三', '四', '五', '六'];
-        $position = date('w', strtotime($date));
-        return $weeks[$position];
+
+        $sta = $date . ' 00:00:00';
+        $end = $date . ' 23:59:59';
+
+        return [$sta, $end];
     }
 
     /**
-     * 是合法的日期
-     * @param  $date
-     * @return bool
-     */
-    public static function isLegalDate($date)
-    {
-        return strtotime($date) === false ? false : true;
-    }
-
-    /**
-     * 获取本月日期
+     * 获取周数
+     *
      * @return array
      */
-    public static function getThisMonth()
+    public static function weeks()
     {
-        $firstDays = date('Y-m-d H:i:s', mktime(0, 0, 0, date('m'), 1, date('Y')));
-        $lastDays = date('Y-m-d H:i:s', mktime(23, 59, 59, date('m'), date('t'), date('Y')));
-
-        return [$firstDays, $lastDays];
+        $weeks = [1 => '周一', 2 => '周二', 3 => '周三', 4 => '周四', 5 => '周五', 6 => '周六', 0 => '周日'];
+        return $weeks;
     }
 
     /**
-     * 获取上个月
-     * @return array
+     * 求两个日期之间相差的天数
+     * @param  string   $day1 日期1
+     * @param  string   $day2 日期2
+     * @return number
      */
-    public static function getLastMonth()
+    public static function diffBetweenTwoDays($day1, $day2)
     {
-        $firstDays = date('Y-m-d H:i:s', mktime(0, 0, 0, date('m') - 1, 1, date('Y')));
-        $lastDays = date('Y-m-d H:i:s', mktime(23, 59, 59, date('m'), 0, date('Y')));
-
-        return [$firstDays, $lastDays];
+        $second1 = strtotime($day1);
+        $second2 = strtotime($day2);
+        return ($second2 - $second1) / 86400;
     }
 
     /**
-     * 获取今年
+     * 获取两个时间内所有的时间
+     * @param  string  $sta      开始时间
+     * @param  string  $end      结束时间
+     * @param  int     $interval 间隔时长
      * @return array
      */
-    public static function getThisYear()
+    public static function betweenTimes($sta = '', $end = '', $interval = 1)
     {
-        $firstDays = date('Y-m-d H:i:s', mktime(0, 0, 0, 1, 1, date('Y')));
-        $lastDays = date('Y-m-d H:i:s', mktime(23, 59, 59, date('m'), date('t'), date('Y')));
+        $t_sta = strtotime(date('Y-m-d') . ' ' . $sta);
+        $t_end = strtotime(date('Y-m-d') . ' ' . $end);
+        $times = [];
 
-        return [$firstDays, $lastDays];
-    }
+        while ($t_sta < $t_end) {
+            $start_time = $t_sta;
+            $t_sta = $t_sta + $interval * 60 * 60;
+            $times[] = [
+                'start_time' => date('H:i', $start_time),
+                'end_time'   => date('H:i', $t_sta),
+            ];
+        }
 
-    /**
-     * 获取去年
-     * @return array
-     */
-    public static function getLastYear()
-    {
-        $firstDays = date('Y-m-d H:i:s', mktime(0, 0, 0, 1, 1, date('Y') - 1));
-        $lastDays = date('Y-m-d H:i:s', mktime(23, 59, 59, 1, 1, date('Y')));
-
-        return [$firstDays, $lastDays];
+        return $times;
     }
 
     /**
      * 获取毫秒时间戳
-     * @author nipeiquan
-     *
      * @return mixed|string 返回类型
      */
-    public static function getMillisecond()
+    public static function microtime()
     {
-        //获取毫秒的时间戳
-        $time = explode(' ', microtime());
-        $time = $time[1] . ($time[0] * 1000);
-        $time2 = explode('.', $time);
-        $time = $time2[0];
-        return $time;
+        list($msec, $sec) = explode(' ', microtime());
+        $microtime = (float) sprintf('%.0f', (floatval($msec) + floatval($sec)) * 1000);
+        return $microtime;
     }
 }
