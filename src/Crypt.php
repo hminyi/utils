@@ -6,6 +6,7 @@ class Crypt
 {
     /**
      * 加密方法
+     *
      * @param  string   $string 需要加密的文本
      * @param  string   $key    密钥
      * @param  int      $expiry 过期时间，单位：秒
@@ -18,6 +19,7 @@ class Crypt
 
     /**
      * 解密方法
+     *
      * @param  string   $string 加密文本
      * @param  string   $key    密钥
      * @return string
@@ -29,6 +31,7 @@ class Crypt
 
     /**
      * 加密解密方法
+     *
      * @param  string   $string    明文或密文
      * @param  string   $operation DECODE表示解密,其它表示加密
      * @param  string   $key       密钥

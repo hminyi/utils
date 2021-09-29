@@ -53,6 +53,7 @@ class Random
 
     /**
      * 能用的随机数生成
+     *
      * @param  string   $type 类型 alpha/alnum/numeric/nozero/unique/md5/encrypt/sha1
      * @param  int      $len  长度
      * @return string
@@ -151,6 +152,7 @@ class Random
 
     /**
      * 获取全球唯一标识
+     *
      * @return string
      */
     public static function uuid()

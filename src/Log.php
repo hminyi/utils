@@ -60,7 +60,7 @@ class Log
      * @param string $logId    日志唯一标识
      * @param string $rollType 日志文件类别 1:YmdH 2:Ymd 3:Ym 其他: .log
      */
-    public static function init($path, $level = self::INFO, $logId = '', $rollType = self::DAY_ROLLING)
+    public static function init($path, $level = self::DEBUG, $logId = '', $rollType = self::DAY_ROLLING)
     {
         if (empty($path)) {
             return false;
@@ -74,6 +74,8 @@ class Log
         self::$logPid = posix_getpid();
         self::$logId = empty($logId) ? self::generateLogId() : $logId;
         self::$rollType = $rollType;
+
+        return new static();
     }
 
     /**
@@ -87,48 +89,49 @@ class Log
     /**
      * @param string|array $msg 信息
      */
-    public static function error($msg)
+    public function error($msg)
     {
-        self::writeLog(self::ERROR, $msg);
+        $this->writeLog(self::ERROR, $msg);
     }
 
     /**
      * @param string|array $msg 信息
      */
-    public static function warning($msg)
+    public function warning($msg)
     {
-        self::writeLog(self::WARNING, $msg);
+        $this->writeLog(self::WARNING, $msg);
     }
 
     /**
      * @param string|array $msg 信息
      */
-    public static function notice($msg)
+    public function notice($msg)
     {
-        self::writeLog(self::NOTICE, $msg);
+        $this->writeLog(self::NOTICE, $msg);
     }
 
     /**
      * @param string|array $msg 信息
      */
-    public static function info($msg)
+    public function info($msg)
     {
-        self::writeLog(self::INFO, $msg);
+        $this->writeLog(self::INFO, $msg);
     }
 
     /**
      * @param string|array $msg 信息
      */
-    public static function debug($msg)
+    public function debug($msg)
     {
-        self::writeLog(self::DEBUG, $msg);
+        $this->writeLog(self::DEBUG, $msg);
     }
 
     /**
      * 追加日志
+     *
      * @param string|array $msg 信息
      */
-    public static function pushNotice($msg)
+    public function pushNotice($msg)
     {
         if (is_array($msg)) {
             foreach ($msg as $k => $val) {
@@ -144,10 +147,11 @@ class Log
 
     /**
      * 写入日志
+     *
      * @param int          $level 等级
      * @param string|array $msg   信息
      */
-    private static function writeLog($level, $msg)
+    private function writeLog($level, $msg)
     {
         if ($level < self::$logLevel) {
             //低于设定级别的日志不记录
@@ -181,7 +185,7 @@ class Log
         }
         $str .= "\n";
 
-        $filePath = self::getLogFilePath($level);
+        $filePath = $this->getLogFilePath($level);
         file_put_contents($filePath, $str, FILE_APPEND);
         self::$noticeStr = '';
         return;
@@ -193,7 +197,7 @@ class Log
      * @param  string   $level 等级
      * @return string
      */
-    private static function getLogFilePath($level)
+    private function getLogFilePath($level)
     {
         $file = $level == self::ERROR ? 'error' : 'access';
         $filePath = rtrim(self::$logPath, '/') . '/' . $file;
@@ -216,8 +220,10 @@ class Log
 
     /**
      * 获取去文件行号
+     *
+     * @return array
      */
-    public static function getFileLineNo()
+    public function getFileLineNo()
     {
         $bt = debug_backtrace();
         if (isset($bt[1]) && isset($bt[1]['file'])) {

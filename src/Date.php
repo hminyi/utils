@@ -6,6 +6,7 @@ class Date
 {
     /**
      * 格式化 UNIX 时间戳
+     *
      * @param  int      $remote 时间戳
      * @param  mixed    $local  本地时间
      * @return string
@@ -137,6 +138,7 @@ class Date
 
     /**
      * 月份所有日期
+     *
      * @param  string  $month 月份
      * @return array
      */
@@ -211,6 +213,7 @@ class Date
 
     /**
      * 最近天数所有日期
+     *
      * @param  int     $days 天数
      * @return array
      */
@@ -231,6 +234,7 @@ class Date
 
     /**
      * 几年前开始和结束的日期
+     *
      * @param  int     $year 几年
      * @return array
      */
@@ -245,6 +249,7 @@ class Date
 
     /**
      * 几天前到现在/昨日结束的日期
+     *
      * @param  int     $day 天数
      * @param  bool    $now 现在或者昨天结束日期
      * @return array
@@ -264,6 +269,7 @@ class Date
 
     /**
      * 两个日期间的所有日期
+     *
      * @param  string  $sta 开始日期
      * @param  string  $end 结束日期
      * @return array
@@ -284,6 +290,7 @@ class Date
 
     /**
      * 几天前的日期
+     *
      * @param  int   $days 天数
      * @return int
      */
@@ -296,6 +303,7 @@ class Date
 
     /**
      * 几天后的日期
+     *
      * @param  int   $days 天数
      * @return int
      */
@@ -308,6 +316,7 @@ class Date
 
     /**
      * 天数转换成秒数
+     *
      * @param  int   $days 天数
      * @return int
      */
@@ -318,6 +327,7 @@ class Date
 
     /**
      * 周数转换成秒数
+     *
      * @param  int   $week 周数
      * @return int
      */
@@ -328,6 +338,7 @@ class Date
 
     /**
      * 日期的开始时间和结束时间
+     *
      * @param  string  $date 日期
      * @return array
      */
@@ -356,6 +367,7 @@ class Date
 
     /**
      * 求两个日期之间相差的天数
+     *
      * @param  string   $day1 日期1
      * @param  string   $day2 日期2
      * @return number
@@ -369,6 +381,7 @@ class Date
 
     /**
      * 获取两个时间内所有的时间
+     *
      * @param  string  $sta      开始时间
      * @param  string  $end      结束时间
      * @param  int     $interval 间隔时长
@@ -394,6 +407,7 @@ class Date
 
     /**
      * 获取毫秒时间戳
+     *
      * @return mixed|string 返回类型
      */
     public static function microtime()

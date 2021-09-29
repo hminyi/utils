@@ -13,7 +13,7 @@ class File
      * @param  int    $mode 权限
      * @return bool
      */
-    public static function mkDir($path, $mode = 0755)
+    public static function createDir($path, $mode = 0755)
     {
         if (is_dir($path)) {
             return true;
@@ -57,21 +57,25 @@ class File
 
     /**
      * 写文件
-     * @param  string $filename  文件名
-     * @param  string $writetext 文件内容
-     * @param  string $openmod   打开方式
+     * @param  string $filename 文件名
+     * @param  string $content  文件内容
+     * @param  string $mode     打开方式
      * @return bool
      */
-    public static function writeFile($filename, $writetext, $openmod = 'w')
+    public static function writeFile($filename, $content, $mode = 'w')
     {
-        if (@$fp = fopen($filename, $openmod)) {
-            flock($fp, 2);
-            fwrite($fp, $writetext);
-            fclose($fp);
+        if (function_exists('file_put_contents')) {
+            file_put_contents($filename, $content);
             return true;
         } else {
-            return false;
+            if (@$fp = fopen($filename, $mode)) {
+                flock($fp, 2);
+                fwrite($fp, $content);
+                fclose($fp);
+                return true;
+            }
         }
+        return false;
     }
 
     /**
@@ -115,7 +119,7 @@ class File
         }
 
         if (!file_exists($toDir)) {
-            self::mkDir($toDir);
+            self::createDir($toDir);
         }
         $file = opendir($surDir);
         while ($fileName = readdir($file)) {
@@ -134,30 +138,17 @@ class File
     }
 
     /**
-     * 列出目录
-     * @param  string  $dir 目录名
-     * @return array
+     * 文件重命名
+     * @param  string $oldName 源文件名
+     * @param  string $newName 新文件名
+     * @return bool
      */
-    public static function getDirs($dir)
+    public static function rename($oldName, $newName)
     {
-        $dir = rtrim($dir, '/') . '/';
-        $dirArray[][] = null;
-        if (false != ($handle = opendir($dir))) {
-            $i = 0;
-            $j = 0;
-            while (false !== ($file = readdir($handle))) {
-                if (is_dir($dir . $file)) {
-                    //判断是否文件夹
-                    $dirArray['dir'][$i] = $file;
-                    $i++;
-                } else {
-                    $dirArray['file'][$j] = $file;
-                    $j++;
-                }
-            }
-            closedir($handle);
+        if (($newName != $oldName) && is_writable($oldName)) {
+            return rename($oldName, $newName);
         }
-        return $dirArray;
+        return false;
     }
 
     /**
@@ -225,25 +216,30 @@ class File
     }
 
     /**
-     * 统计文件夹大小
-     * @param  string $dir 目录名
-     * @return int
+     * 列出目录
+     * @param  string  $dir 目录名
+     * @return array
      */
-    public static function getSize($dir)
+    public static function getDirs($dir)
     {
-        $dirlist = opendir($dir);
-        $dirsize = 0;
-        while (false !== ($folderorfile = readdir($dirlist))) {
-            if ($folderorfile != '.' && $folderorfile != '..') {
-                if (is_dir("$dir/$folderorfile")) {
-                    $dirsize += self::getSize("$dir/$folderorfile");
+        $dir = rtrim($dir, '/') . '/';
+        $dirArray[][] = null;
+        if (false != ($handle = opendir($dir))) {
+            $i = 0;
+            $j = 0;
+            while (false !== ($file = readdir($handle))) {
+                if (is_dir($dir . $file)) {
+                    //判断是否文件夹
+                    $dirArray['dir'][$i] = $file;
+                    $i++;
                 } else {
-                    $dirsize += filesize("$dir/$folderorfile");
+                    $dirArray['file'][$j] = $file;
+                    $j++;
                 }
             }
+            closedir($handle);
         }
-        closedir($dirlist);
-        return $dirsize;
+        return $dirArray;
     }
 
     /**
@@ -274,11 +270,44 @@ class File
     }
 
     /**
+     * 统计文件夹大小
+     * @param  string $dir 目录名
+     * @return int
+     */
+    public static function getSize($dir)
+    {
+        $handle = opendir($dir);
+        $size = 0;
+        while (false !== ($folderOrFile = readdir($handle))) {
+            if ($folderOrFile != '.' && $folderOrFile != '..') {
+                if (is_dir("$dir/$folderOrFile")) {
+                    $size += self::getSize("$dir/$folderOrFile");
+                } else {
+                    $size += filesize("$dir/$folderOrFile");
+                }
+            }
+        }
+        closedir($handle);
+        return $size;
+    }
+
+    /**
+     * 获取文件扩展名
+     * @param  string   $filename 文件路径
+     * @return string
+     */
+    public static function getExtension($filename)
+    {
+        $pathInfo = pathinfo($filename);
+        return strtolower($pathInfo['extension']);
+    }
+
+    /**
      * 判断目录是否为空
      * @param  string $directory 目录路径
      * @return bool
      */
-    public function isEmpty($directory)
+    public static function isEmpty($directory)
     {
         $handle = opendir($directory);
         while (($file = readdir($handle)) !== false) {
@@ -316,30 +345,5 @@ class File
         }
         fclose($fp);
         return true;
-    }
-
-    /**
-     * @desc 文件重命名
-     * @param  string $old_name 源文件名
-     * @param  string $new_name 新文件名
-     * @return bool
-     */
-    public static function rename($old_name, $new_name)
-    {
-        if (($new_name != $old_name) && is_writable($old_name)) {
-            return rename($old_name, $new_name);
-        }
-        return false;
-    }
-
-    /**
-     * @desc 获取文件扩展名
-     * @param  string   $filename 文件路径
-     * @return string
-     */
-    public static function getExtension($filename)
-    {
-        $path_info = pathinfo($filename);
-        return strtolower($path_info['extension']);
     }
 }

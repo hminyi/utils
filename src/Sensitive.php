@@ -50,6 +50,7 @@ class Sensitive
 
     /**
      * 构建铭感词树【文件模式】
+     *
      * @param  string        $filepath
      * @throws \Exception
      * @return $this
@@ -66,7 +67,8 @@ class Sensitive
 
     /**
      * 构建铭感词树【数组模式】
-     * @param  null          $sensitiveWords
+     *
+     * @param  array         $sensitiveWords
      * @throws \Exception
      * @return $this
      */
@@ -138,10 +140,10 @@ class Sensitive
     /**
      * 替换敏感字字符
      *
-     * @param  $content 文本内容
-     * @param  string   $replaceChar    替换字符
-     * @param  bool     $repeat         true=>重复替换为敏感词相同长度的字符
-     * @param  int      $matchType
+     * @param  string  $content      文本内容
+     * @param  string  $replaceChar  替换字符
+     * @param  bool    $repeat       true=>重复替换为敏感词相同长度的字符
+     * @param  int     $matchType
      * @return mixed
      */
     public function replace($content, $replaceChar = '', $repeat = false, $matchType = 1)
@@ -163,10 +165,11 @@ class Sensitive
 
     /**
      * 标记敏感词
-     * @param  $content 文本内容
-     * @param  string   $sTag           标签开头，如<mark>
-     * @param  string   $eTag           标签结束，如</mark>
-     * @param  int      $matchType
+     *
+     * @param  string  $content      文本内容
+     * @param  string  $sTag         标签开头，如<mark>
+     * @param  string  $eTag         标签结束，如</mark>
+     * @param  int     $matchType
      * @return mixed
      */
     public function mark($content, $sTag, $eTag, $matchType = 1)
@@ -185,6 +188,7 @@ class Sensitive
 
     /**
      * 被检测内容是否合法
+     *
      * @param  string $content 内容
      * @return bool
      */
@@ -223,6 +227,7 @@ class Sensitive
 
     /**
      * 迭代读取文件
+     *
      * @param string $filepath 文件路径
      */
     protected function yieldToReadFile($filepath)
@@ -236,6 +241,7 @@ class Sensitive
 
     /**
      * 将单个敏感词构建成树结构
+     *
      * @param  string $word 关键词
      * @return null
      */
@@ -273,6 +279,7 @@ class Sensitive
 
     /**
      * 敏感词替换为对应长度的字符
+     *
      * @param  string   $word 关键词
      * @param  string   $char 替换词
      * @return string

@@ -9,6 +9,7 @@ class Http
 {
     /**
      * 发送一个POST请求
+     *
      * @param  string         $url     请求URL
      * @param  array          $params  请求参数
      * @param  array          $options 扩展参数
@@ -22,6 +23,7 @@ class Http
 
     /**
      * 发送一个GET请求
+     *
      * @param  string         $url     请求URL
      * @param  array          $params  请求参数
      * @param  array          $options 扩展参数
@@ -35,6 +37,7 @@ class Http
 
     /**
      * CURL发送Request请求,含POST和REQUEST
+     *
      * @param  string  $url     请求的链接
      * @param  mixed   $params  传递的参数
      * @param  string  $method  请求的方法
@@ -102,6 +105,7 @@ class Http
 
     /**
      * 异步发送一个请求
+     *
      * @param  string $url    请求的链接
      * @param  mixed  $params 请求的参数
      * @param  string $method 请求的方法
@@ -155,6 +159,7 @@ class Http
 
     /**
      * 发送文件到客户端
+     *
      * @param string $file          文件
      * @param bool   $delaftersend  发送完删除
      * @param bool   $exitaftersend 发送完退出

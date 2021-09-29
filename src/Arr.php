@@ -9,6 +9,7 @@ class Arr
 {
     /**
      * 获取数组中指定的列
+     *
      * @param  array   $source 数组
      * @param  string  $column 键名
      * @return array
@@ -24,6 +25,7 @@ class Arr
 
     /**
      * 获取数组中指定的列 [支持多列]
+     *
      * @param  array   $source  数组
      * @param  array   $columns 列数组
      * @return array
@@ -43,6 +45,7 @@ class Arr
 
     /**
      * 把二维数组中某列设置为key返回
+     *
      * @param  array   $source 数组
      * @param  string  $index  键值
      * @return array
@@ -58,6 +61,7 @@ class Arr
 
     /**
      * 多维数组合并
+     *
      * @param  array   $array1 数组1
      * @param  array   $array2 数组2
      * @return array
@@ -78,6 +82,7 @@ class Arr
 
     /**
      * 在二维数组中查找指定值
+     *
      * @param  array  $array     二维数组
      * @param  string $searchIdx 查找的索引
      * @param  string $searchVal 查找的值
@@ -95,6 +100,7 @@ class Arr
 
     /**
      * 多维数组转化为一维数组
+     *
      * @param  array   $array 多维数组
      * @return array
      */
@@ -116,6 +122,7 @@ class Arr
 
     /**
      * 将obj深度转化成array
+     *
      * @param  obj|array $obj 要转换的数据
      * @return array
      */
@@ -136,6 +143,7 @@ class Arr
 
     /**
      * 二维数组排序
+     *
      * @param  array   $array 数组
      * @param  string  $keys  根据键值
      * @param  string  $type  升序降序
@@ -161,6 +169,7 @@ class Arr
 
     /**
      * 字符串转换为数组
+     *
      * @param  string  $str  要分割的字符串
      * @param  string  $glue 分割符
      * @return array
@@ -176,6 +185,7 @@ class Arr
 
     /**
      * 数组转换为字符串
+     *
      * @param  array    $array 要连接的数组
      * @param  string   $glue  分割符
      * @return string
@@ -191,6 +201,7 @@ class Arr
 
     /**
      * 将array转换为XML格式的字符串
+     *
      * @param  array         $data
      * @throws \Exception
      * @return string
@@ -210,6 +221,7 @@ class Arr
 
     /**
      * 将XML格式字符串转换为array
+     *
      * @param  string        $str XML格式字符串
      * @throws \Exception
      * @return array
@@ -238,6 +250,7 @@ class Arr
 
     /**
      * 两个数组的笛卡尔积
+     *
      * @param  array   $array1 数组1
      * @param  array   $array2 数组2
      * @return array
@@ -257,6 +270,7 @@ class Arr
 
     /**
      * 多个数组的笛卡尔积
+     *
      * @return array
      */
     public static function multiCombine()
