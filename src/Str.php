@@ -27,7 +27,7 @@ class Str
      * @param  string   $delimiter 数字和单位分隔符
      * @return string
      */
-    public function formatBytes($size, $delimiter = '')
+    public static function formatBytes($size, $delimiter = '')
     {
         $units = ['B', 'KB', 'MB', 'GB', 'TB', 'PB'];
         for ($i = 0; $size >= 1024 && $i < 5; $i++) {
@@ -107,7 +107,6 @@ class Str
         }
         while (substr($str, -strlen($remove)) == $remove) {
             $str = substr($str, 0, -strlen($remove));
-            echo $str;
         }
         return $str;
     }

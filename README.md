@@ -940,25 +940,241 @@
   ```
 #### Str（字符串）
 - ##### formatBytes
+  格式化字节大小
+  ```php
+  $str = \Zsirius\Utils\Str::formatBytes(10000);
+  var_dump($str);
+  
+  // 结果
+  string(6) "9.77KB"
+  ```
 - ##### filterEmoji
+  过滤emoji表情
+  ```php
+  $str = \Zsirius\Utils\Str::filterEmoji('😁您好');
+  var_dump($str);
+
+  // 结果
+  string(6) "您好"
+  ```
 - ##### trim
+  删除字符串两端的字符串
+  ```php
+  $str = \Zsirius\Utils\Str::trim('。您好啊。', '。', 'all');
+  var_dump($str);
+
+  // 结果
+  string(9) "您好啊"
+  ```
 - ##### ltrim
+  删除字符串左边的字符串
+  ```php
+  $str = \Zsirius\Utils\Str::ltrim('。您好啊。', '。');
+  var_dump($str);
+
+  // 结果
+  string(9) "您好啊。"
+  ```
 - ##### rtrim
+  删除字符串右边的字符串
+  ```php
+  $str = \Zsirius\Utils\Str::rtrim('。您好啊。', '。');
+  var_dump($str);
+
+  // 结果
+  string(9) "。您好啊"
+  ```
 - ##### contains
+  检查字符串中是否包含某些字符串
+  ```php
+  $str = \Zsirius\Utils\Str::contains('hello world', 'world');
+  var_dump($str);
+
+  // 结果
+  bool(true)
+  ```
 - ##### endsWith
+  检查字符串是否以某些字符串结尾
+  ```php
+  $str = \Zsirius\Utils\Str::endsWith('hello world', 'ld');
+  var_dump($str);
+
+  // 结果
+  bool(true)
+  ```
 - ##### startsWith
+  检查字符串是否以某些字符串开头
+  ```php
+  $str = \Zsirius\Utils\Str::startsWith('hello world', 'he');
+  var_dump($str);
+
+  // 结果
+  bool(true)
+  ```
 - ##### lower
+  字符串转小写
+  ```php
+  $str = \Zsirius\Utils\Str::lower('HellO');
+  var_dump($str);
+
+  // 结果
+  string(5) "hello"
+  ```
 - ##### upper
+  字符串转大写
+  ```php
+  $str = \Zsirius\Utils\Str::upper('HellO');
+  var_dump($str);
+
+  // 结果
+  string(5) "HELLO"
+  ```
 - ##### length
+  获取字符串的长度
+  ```php
+  $str = \Zsirius\Utils\Str::length('HellO');
+  var_dump($str);
+
+  // 结果
+  int(5)
+  ```
 - ##### substr
+  截取字符串
+  ```php
+  $str = Str::substr('HellO', 1, 3);
+  var_dump($str);
+
+  // 结果
+  string(3) "ell"
+  ```
 - ##### snake
+  驼峰转下划线
+  ```php
+  $str = Str::snake('helloWorld');
+  var_dump($str);
+
+  // 结果
+  string(11) "hello_world"
+  ```
 - ##### camel
+  下划线转驼峰(首字母小写)
+  ```php
+  $str = Str::camel('hello_world');
+  var_dump($str);
+
+  // 结果
+  string(10) "helloWorld"
+  ```
 - ##### studly
+  下划线转驼峰(首字母大写)
+  ```php
+  $str = Str::studly('hello_world');
+  var_dump($str);
+
+  // 结果
+  string(10) "HelloWorld"
+  ```
 - ##### title
+  转为首字母大写的标题格式
+  ```php
+  $str = Str::title('hello_world');
+  var_dump($str);
+
+  // 结果
+  string(11) "Hello_World"
+  ```
 - ##### orderSn
+  生成订单号
+  ```php
+  $str = Str::orderSn();
+  var_dump($str);
+
+  // 结果
+  string(16) "2109301657100565"
+  ```
 
 #### Tree（树型）
+```php
+$arr = [
+    1 => ['id' => '1', 'pid' => 0, 'name' => '一级栏目一'],
+    2 => ['id' => '2', 'pid' => 0, 'name' => '一级栏目二'],
+    3 => ['id' => '3', 'pid' => 1, 'name' => '二级栏目一'],
+    4 => ['id' => '4', 'pid' => 1, 'name' => '二级栏目二'],
+    5 => ['id' => '5', 'pid' => 2, 'name' => '二级栏目三'],
+    6 => ['id' => '6', 'pid' => 3, 'name' => '三级栏目一'],
+    7 => ['id' => '7', 'pid' => 3, 'name' => '三级栏目二'],
+];
+// 初始化
+$tree = Tree::instance()->init($arr);
+// 获取pid=1的数组
+$tree->getChild(1);
+// 读取pid=1的所有孩子节点，包含本身
+$tree->getChildren(1, true);
+// 读取pid=1的所有孩子节点ID，包含本身
+$tree->getChildrenIds(1, true);
+// 得到当前位置父辈数组
+$tree->getParent(1);
+// 得到当前位置所有父辈数组
+$tree->getParents(1);
+// 读取pid=1所有父类节点ID
+$tree->getParentsIds(1);
+// 树型结构Option
+$tree->getTree(0);
+// 树型结构Ul
+$tree->getTreeUl(0);
+// 菜单结构
+$tree->getTreeMenu(0, '');
+// 特殊树形结构
+$tree->getTreeSpecial(0, '', '');
+// 获取树状数组
+$tree->getTreeArray(0);
+// 将getTreeArray的结果返回为二维数组
+$tree->getTreeList(0);
+```
 
 #### Validator（验证）
-
-#### Zip（解压缩）
+- ##### checkEmail
+  检查邮件地址
+- ##### checkStr
+  检查字符串
+- ##### checkInt
+  检查整数
+- ##### checkHttp
+  检查使用HTTP协议的网址
+- ##### checkTel
+  检查电话号码
+- ##### checkMobile
+  检查手机号码
+- ##### checkZipCode
+  检查邮编
+- ##### checkDate
+  检查日期是否正确
+- ##### checkDateRange
+  检查开始日期是否小于结束日期
+- ##### checkDatetimeRange
+  检查开始时间是否小于结束时间
+- ##### checkMoney
+- 
+  检查是否为合法金额
+- ##### checkDatetime
+  检查是否为一个合法的时间格式
+- ##### checkLooseDate
+  检测一个宽松的日期格式
+- ##### checkFloat
+  判断是否是浮点数
+- ##### checkIdCard
+  身份证号码验证
+- ##### checkChineseName
+  中文名验证
+- ##### checkImgUrl
+  判断一个url是否是图片链接
+- ##### checkIP
+  判断是否为合法的ip地址
+- ##### checkJson
+  验证是否是 json 字符串
+- ##### isMobile
+  判断是否为手机访问
+- ##### isWeiXin
+  判断是否为微信访问
+- ##### isHttps
+  判断当前协议是否为HTTPS

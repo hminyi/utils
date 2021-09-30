@@ -85,7 +85,7 @@ class Validator
     }
 
     /**
-     * 检查电话号码 ,修改后需要将验证放开
+     * 检查电话号码
      * @param  string $str 待查电话号码(正确格式010-87786632或(010)32678878或32678878)
      * @return bool
      */
@@ -276,10 +276,10 @@ class Validator
             $sigma += $b * $w;
         }
         //计算序号
-        $sstr = $sigma % 11;
+        $str = $sigma % 11;
 
         //按照序号从校验码串中提取相应的字符。
-        $check_str = $ai[$sstr];
+        $check_str = $ai[$str];
 
         if ($str{17} == $check_str) {
             return true;
