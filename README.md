@@ -1041,7 +1041,7 @@
 - ##### substr
   截取字符串
   ```php
-  $str = Str::substr('HellO', 1, 3);
+  $str = \Zsirius\Utils\Str::substr('HellO', 1, 3);
   var_dump($str);
 
   // 结果
@@ -1050,7 +1050,7 @@
 - ##### snake
   驼峰转下划线
   ```php
-  $str = Str::snake('helloWorld');
+  $str = \Zsirius\Utils\Str::snake('helloWorld');
   var_dump($str);
 
   // 结果
@@ -1059,7 +1059,7 @@
 - ##### camel
   下划线转驼峰(首字母小写)
   ```php
-  $str = Str::camel('hello_world');
+  $str = \Zsirius\Utils\Str::camel('hello_world');
   var_dump($str);
 
   // 结果
@@ -1068,7 +1068,7 @@
 - ##### studly
   下划线转驼峰(首字母大写)
   ```php
-  $str = Str::studly('hello_world');
+  $str = \Zsirius\Utils\Str::studly('hello_world');
   var_dump($str);
 
   // 结果
@@ -1077,7 +1077,7 @@
 - ##### title
   转为首字母大写的标题格式
   ```php
-  $str = Str::title('hello_world');
+  $str = \Zsirius\Utils\Str::title('hello_world');
   var_dump($str);
 
   // 结果
@@ -1086,7 +1086,7 @@
 - ##### orderSn
   生成订单号
   ```php
-  $str = Str::orderSn();
+  $str = \Zsirius\Utils\Str::orderSn();
   var_dump($str);
 
   // 结果
