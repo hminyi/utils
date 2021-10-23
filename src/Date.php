@@ -412,8 +412,10 @@ class Date
      */
     public static function microtime()
     {
-        list($msec, $sec) = explode(' ', microtime());
-        $microtime = (float) sprintf('%.0f', (floatval($msec) + floatval($sec)) * 1000);
-        return $microtime;
+        $time = explode(' ', microtime());
+        $time = $time[1] . ($time[0] * 1000);
+        $time2 = explode('.', $time);
+        $time = $time2[0];
+        return $time;
     }
 }
