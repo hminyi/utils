@@ -15,9 +15,9 @@ class Http
      * @param  array          $options 扩展参数
      * @return mixed|string
      */
-    public static function post($url, $params = [], $options = [])
+    public static function post($url, $params = [], $header = [], $options = [])
     {
-        $req = self::sendRequest($url, $params, 'POST', $options);
+        $req = self::sendRequest($url, $params, 'POST', $header, $options);
         return $req['ret'] ? $req['msg'] : '';
     }
 
@@ -29,9 +29,9 @@ class Http
      * @param  array          $options 扩展参数
      * @return mixed|string
      */
-    public static function get($url, $params = [], $options = [])
+    public static function get($url, $params = [], $header = [], $options = [])
     {
-        $req = self::sendRequest($url, $params, 'GET', $options);
+        $req = self::sendRequest($url, $params, 'GET', $header, $options);
         return $req['ret'] ? $req['msg'] : '';
     }
 
@@ -44,7 +44,7 @@ class Http
      * @param  mixed   $options CURL的参数
      * @return array
      */
-    public static function sendRequest($url, $params = [], $method = 'POST', $options = [])
+    public static function sendRequest($url, $params = [], $method = 'POST', $header = [], $options = [])
     {
         $method = strtoupper($method);
         $protocol = substr($url, 0, 5);
@@ -73,7 +73,7 @@ class Http
         $defaults[CURLOPT_TIMEOUT] = 3;
 
         // disable 100-continue
-        curl_setopt($ch, CURLOPT_HTTPHEADER, ['Expect:']);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
 
         if ('https' == $protocol) {
             $defaults[CURLOPT_SSL_VERIFYPEER] = false;
